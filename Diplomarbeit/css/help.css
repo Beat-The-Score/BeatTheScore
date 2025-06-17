@@ -1,0 +1,10 @@
+
+body {
+    background:url(../graphics/settings_background.png);
+    background-repeat:no-repeat;
+    background-size:cover;
+
+    font-family: sans-serif;
+    font-size: 30px;
+    color: #fff;
+}

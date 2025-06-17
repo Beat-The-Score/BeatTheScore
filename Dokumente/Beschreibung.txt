@@ -1,0 +1,18 @@
+Projektarbeit
+
+Beat the Score
+Visuell-akustisches Drill-Programm zum Üben von Musikstücken mit MIDI-Instrumente durch Feedback in Echtzeit für Windows, Linux und Android.
+QtQuick 2, RtMidi, SoundTouch, JavaScript, C++, LibUSB, Android
+Prof. Dr. Dipl-Ing. Günther Kolousek
+Felix Kugler, Alfred Neumayer, Daniel Novotny
+Prof. Dr. Dipl-Ing. Günther Kolousek
+
+
+Diplomarbeit
+
+BTS Guitar Extension
+Erweiterung von BTS um die Unterstützung von analogen Signalen, speziell Gitarren. Verkauf in Google Play und auf einer Website.
+QtQuick 2, HTML5, ASP.NET, MySQL, KissFFT
+Prof. Dr. Dipl-Ing. Günther Kolousek
+Felix Kugler, Alfred Neumayer, Daniel Novotny
+Prof. Dr. Dipl-Ing. Günther Kolousek

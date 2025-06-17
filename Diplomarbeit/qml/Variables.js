@@ -1,0 +1,5 @@
+var lastItem;
+
+function func() {
+
+}
