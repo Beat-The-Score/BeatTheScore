@@ -26,7 +26,7 @@ QML_IMPORT_PATH =
 # MOBILITY +=
 
 include($$PWD/../SoundTouchLib/SoundTouchLib.pro)
-include($$PWD/../kiss-fft/kiss-fft.pro)
+include($$PWD/../KissFFT/KissFFT.pro)
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += \

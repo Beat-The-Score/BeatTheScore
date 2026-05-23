@@ -1,5 +1,12 @@
 TEMPLATE = subdirs
+
+linux {
+SUBDIRS += Diplomarbeit
+}
+!linux {
 SUBDIRS += KissFFT SoundTouchLib usb Diplomarbeit
+}
+
 CONFIG += ordered
 
 !android {
