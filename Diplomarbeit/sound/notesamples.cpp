@@ -69,7 +69,10 @@ void NoteSamples::startPitching()
             filename = filename.remove(0,1);
             filename.chop(4); //remove file ending
 
-            int index = filename.toInt();
+            bool parseOk = false;
+            const int index = filename.toInt(&parseOk);
+            if (!parseOk)
+                continue;
 
             char * tmpBuf = barr.data();
             notes[index]->buffer = new char[barr.size() - 64];

@@ -40,6 +40,7 @@
 
 #include "RtMidi.h"
 #include <sstream>
+#include <iostream>
 
 //*********************************************************************//
 //  RtMidi Definitions
@@ -1337,8 +1338,9 @@ void MidiInAlsa :: initialize( const std::string& clientName )
     snd_seq_t* seq = createSequencer( clientName );
     if ( seq == NULL ) {
         s_seq = NULL;
-        errorString_ = "MidiInAlsa::initialize: error creating ALSA sequencer client object.";
-        RtMidi::error( RtError::DRIVER_ERROR, errorString_ );
+        std::cout << "MidiInAlsa::initialize: error creating ALSA sequencer client object." << std::endl;
+        //RtMidi::error( RtError::DRIVER_ERROR, errorString_ );
+        return;
     }
 
     // Save our api-specific connection information.
@@ -1357,6 +1359,7 @@ void MidiInAlsa :: initialize( const std::string& clientName )
     if ( pipe(data->trigger_fds) == -1 ) {
         errorString_ = "MidiInAlsa::initialize: error creating pipe objects.";
         RtMidi::error( RtError::DRIVER_ERROR, errorString_ );
+        return;
     }
 
     // Create the input queue

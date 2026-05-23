@@ -1,13 +1,14 @@
 # Add more folders to ship with the application, here
 TARGET = BeatTheScore
+TEMPLATE = lib
 
 folder_01.source = qml
-folder_02.source = wav/guitar
+#folder_02.source = wav/guitar
 folder_02.target = wav
 folder_03.source = wav/drum
 folder_03.target = wav
-folder_04.source = wav/piano
-folder_04.target = wav
+#folder_04.source = wav/piano
+#folder_04.target = wav
 folder_05.source = scores
 #folder_05.target = scores
 folder_06.source = graphics
@@ -24,15 +25,19 @@ QML_IMPORT_PATH =
 # CONFIG += mobility
 # MOBILITY +=
 
+include($$PWD/../SoundTouchLib/SoundTouchLib.pro)
+include($$PWD/../kiss-fft/kiss-fft.pro)
+
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES +=  $$files(*.cpp) \
-    $$files(input/*.cpp) \
-    $$files(sound/*.cpp) \
-    $$files(music/*.cpp) \
-    $$files(game/*.cpp) \
-    $$files(licensing/*.cpp) \
-    $$files(visuals/*.cpp) \
-    $$files(menu/*.cpp)
+SOURCES += \
+    $$files($$PWD/*.cpp) \
+    $$files($$PWD/input/*.cpp) \
+    $$files($$PWD/sound/*.cpp) \
+    $$files($$PWD/music/*.cpp) \
+    $$files($$PWD/game/*.cpp) \
+    $$files($$PWD/licensing/*.cpp) \
+    $$files($$PWD/visuals/*.cpp) \
+    $$files($$PWD/menu/*.cpp)
 
 # Installation path
 # target.path =
@@ -42,7 +47,7 @@ include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
 qtcAddDeployment()
 
 QT -= core gui
-QT += declarative multimedia sql svg
+QT += multimedia sql svg
 
 !android {
     QT += webkit webkitwidgets
@@ -75,6 +80,12 @@ android {
 
     INCLUDEPATH += $$PWD/android-libs/libusb/include/
     DEPENDPATH += $$PWD/android/libs/armeabi-v7a/
+
+    INCLUDEPATH += $$PWD/kiss-fft
+    DEPENDPATH += $$PWD/kiss-fft
+
+    INCLUDEPATH += $$PWD/SoundTouchLib/source
+    DEPENDPATH += $$PWD/SoundTouchLib/source
 
     OTHER_FILES += \
         android/res/values-el/strings.xml \
@@ -119,9 +130,8 @@ HEADERS += $$files(*.h) \
     $$files(menu/*.h)
 
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../SoundTouchLib/release/ -lSoundTouchLib -L$$OUT_PWD/../kissfft/release/ -lkissfft
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../SoundTouchLib/release/
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../SoundTouchLib/debug/ -lSoundTouchLib -L$$OUT_PWD/../kissfft/debug/ -lkissfft
-else:unix:!macx: LIBS += -L$$OUT_PWD/../SoundTouchLib/ -lSoundTouchLib -L$$OUT_PWD/../KissFFT/ -lkissfft
 
 # OpenSSL
 windows {

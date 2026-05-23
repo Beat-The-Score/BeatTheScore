@@ -57,7 +57,11 @@ void LicenseManager::licenseReplyFinished(QNetworkReply *reply)
 
 LicenseCheckingState LicenseManager::isLicenseValid()
 {
+#ifndef Q_OS_LINUX
     return this->licenseCheckState;
+#else
+    return LICENSE_VALID;
+#endif
 }
 
 void LicenseManager::isActivationCodeValid(QString email, QString serial)
@@ -114,10 +118,9 @@ void LicenseManager::isActivationCodeValid(QString email, QString serial)
  * */
 bool LicenseManager::isLicenseFileValid()
 {
-    #ifdef Q_OS_ANDROID
+#ifdef Q_OS_LINUX
     return true;
-    #else
-
+#else
     QFile licenseFile(licenseFilePath());
     //cout << "license Path: " << licenseFilePath().toStdString() << endl;
     if(!licenseFile.exists()) {
@@ -147,15 +150,18 @@ bool LicenseManager::isLicenseFileValid()
         licenseCheckState = LICENSE_FILE_INVALID;
         emit isLicenseValidChanged();
     }
-    #endif
+#endif
 }
 
+#ifdef Q_OS_LINUX
+QString LicenseManager::digestFromString(QString)
+{
+    return "";
+}
+#else
 QString LicenseManager::digestFromString(QString str)
 {
-    #ifndef Q_OS_ANDROID
-    EVP_MD_CTX context;
-    unsigned char digest[EVP_MAX_MD_SIZE];
-    unsigned int digestLength = 0;
+    EVP_MD_CTX context; unsigned char digest[EVP_MAX_MD_SIZE]; unsigned int digestLength = 0;
 
     EVP_DigestInit(&context, EVP_sha256());
     EVP_DigestUpdate(&context, str.toStdString().c_str(), str.size());
@@ -165,12 +171,12 @@ QString LicenseManager::digestFromString(QString str)
     QByteArray bArr((const char*)digest, digestLength);
     QString retStr(bArr.toHex());
     return retStr;
-    #endif
 }
+#endif
 
+#ifndef Q_OS_LINUX
 QString LicenseManager::decryptMessage(unsigned char *message, int size)
 {
-    #ifndef Q_OS_ANDROID
     int pem_size = sizeof(public_pem)/sizeof(*public_pem);
     BIO *publicKeyBuffer = BIO_new_mem_buf((void*)public_pem, pem_size);
     RSA *rsaPublic;
@@ -203,5 +209,10 @@ QString LicenseManager::decryptMessage(unsigned char *message, int size)
         return NULL;
     }
     return retStr;
-    #endif
 }
+#else
+QString LicenseManager::decryptMessage(unsigned char *, int)
+{
+    return QString("");
+}
+#endif

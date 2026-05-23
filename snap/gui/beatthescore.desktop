@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Beat The Score
+Comment=A Music Instrument Learning Drill Program
+Icon=${SNAP}/snap/gui/beatthescore.png
+Exec=beatthescore

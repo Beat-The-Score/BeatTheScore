@@ -3,6 +3,7 @@
 #include <math.h>
 
 #include "../music/noteutils.h"
+#include <kiss_fft.h>
 
 float interpolate(float *array, float index, int size)
 {
@@ -56,7 +57,7 @@ AudioAnalyser::~AudioAnalyser()
     //delete sampleBuffer;
     //delete minAmplitudes;
     //delete maxAmplitudes;
-    kiss_fft_cleanup();
+    //kiss_fft_cleanup();
     delete slowConvolution;
 }
 

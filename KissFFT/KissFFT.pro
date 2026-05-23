@@ -4,15 +4,17 @@
 #
 #-------------------------------------------------
 
+!linux {
 TARGET = kissfft
 TEMPLATE = lib
+}
 
 SOURCES += \
-    kiss_fft.c
+    $$PWD/kiss_fft.c
 
 INCLUDEPATH += $$PWD
 
 HEADERS += \
-    _kiss_fft_guts.h \
-    kiss_fft.h \
-    kissfft.hh
+    $$PWD/_kiss_fft_guts.h \
+    $$PWD/kiss_fft.h \
+    $$PWD/kissfft.hh

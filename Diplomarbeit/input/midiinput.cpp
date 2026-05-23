@@ -5,6 +5,7 @@
 #include <memory>
 #include <algorithm>
 #include <chrono>
+#include <cmath>
 #ifdef Q_WS_WIN
     #include "Windows.h"
 #else
@@ -209,7 +210,7 @@ void MidiInputThread::run()
 
                    int mostSignificant = message[2] & 0x7f;
                    int leastSignificant = message[1] & 0x7f;
-                   int pitchVal = mostSignificant * pow(2,7) + leastSignificant;
+                   int pitchVal = mostSignificant * std::pow(2,7) + leastSignificant;
                    int absolutePitchShift = pitchVal - pitchCenter;
                    float centShift = ((float) absolutePitchShift / halfStepShift) * 100.0;
                    applyPitchShiftToOpenEvents((int) centShift);

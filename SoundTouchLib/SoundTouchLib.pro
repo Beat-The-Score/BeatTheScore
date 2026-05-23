@@ -4,21 +4,31 @@
 #
 #-------------------------------------------------
 
-TARGET = SoundTouchLib
-TEMPLATE = lib
+!linux {
+    TARGET = SoundTouchLib
+    TEMPLATE = lib
+}
 
 SOURCES += \
-    source/AAFilter.cpp source/BPMDetect.cpp source/cpu_detect_x86.cpp source/FIFOSampleBuffer.cpp \
-    source/FIRFilter.cpp source/mmx_optimized.cpp source/PeakFinder.cpp source/RateTransposer.cpp \
-    source/SoundTouch.cpp source/sse_optimized.cpp source/TDStretch.cpp
+    $$PWD/source/AAFilter.cpp \
+    $$PWD/source/BPMDetect.cpp \
+    $$PWD/source/cpu_detect_x86.cpp \
+    $$PWD/source/FIFOSampleBuffer.cpp \
+    $$PWD/source/FIRFilter.cpp \
+    $$PWD/source/mmx_optimized.cpp \
+    $$PWD/source/PeakFinder.cpp \
+    $$PWD/source/RateTransposer.cpp \
+    $$PWD/source/SoundTouch.cpp \
+    $$PWD/source/sse_optimized.cpp \
+    $$PWD/source/TDStretch.cpp
 
 HEADERS += \
-    include/BPMDetect.h \
-    include/FIFOSampleBuffer.h \
-    include/FIFOSamplePipe.h \
-    include/SoundTouch.h \
-    include/soundtouch_config.h \
-    include/STTypes.h
+    $$PWD/include/BPMDetect.h \
+    $$PWD/include/FIFOSampleBuffer.h \
+    $$PWD/include/FIFOSamplePipe.h \
+    $$PWD/include/SoundTouch.h \
+    $$PWD/include/soundtouch_config.h \
+    $$PWD/include/STTypes.h
 
 INCLUDEPATH += $$PWD/source
 INCLUDEPATH += $$PWD/include

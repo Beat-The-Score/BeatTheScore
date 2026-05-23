@@ -260,7 +260,6 @@ void MainGame::start()
 
     isPitchingDone = true;
 
-
     // Hoffentlich OK
     songSelection();
 }

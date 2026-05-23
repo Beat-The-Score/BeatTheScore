@@ -1,0 +1,98 @@
+name: beatthescore
+version: latest
+base: core24
+summary: Beat The Score music learning drill program
+description: TBD
+confinement: strict
+grade: stable
+
+platforms:
+  amd64:
+  arm64:
+  armhf:
+
+apps:
+  beatthescore:
+    command: opt/BeatTheScore/bin/BeatTheScore
+    command-chain:
+      - bin/gpu-2404-wrapper
+      - bin/lomiri-launch
+    plugs:
+      - opengl
+      - wayland
+      - x11
+      - home
+      - removable-media
+      - raw-usb
+      - alsa
+      - audio-record
+      - audio-playback
+      - maliit
+
+plugs:
+  lomiri-ui-toolkit:
+    interface: content
+    target: $SNAP/lomiri-ui-toolkit
+    default-provider: lomiri-ui-toolkit-core24
+  gpu-2404:
+    interface: content
+    target: $SNAP/gpu-2404
+    default-provider: mesa-2404
+
+layout:
+  /usr/share/X11/xkb:
+    symlink: $SNAP/lomiri-ui-toolkit/usr/share/X11/xkb
+  /usr/share/icons:
+    bind: $SNAP/lomiri-ui-toolkit/usr/share/icons
+  /usr/share/sounds:
+    bind: $SNAP/usr/share/sounds
+  /usr/share/alsa:
+    symlink: $SNAP/lomiri-ui-toolkit/usr/share/alsa
+  /etc/alsa:
+    bind: $SNAP/lomiri-ui-toolkit/etc/alsa
+
+parts:
+  main:
+    plugin: qmake
+    source: .
+    qmake-project-file: Diplomarbeit/Diplomarbeit.pro
+    build-snaps:
+      - lomiri-ui-toolkit-core24
+    build-packages:
+      - qtbase5-dev
+      - qtbase5-dev-tools
+      - qtdeclarative5-dev
+      - qtquickcontrols2-5-dev
+      - qtmultimedia5-dev
+      - libqt5svg5-dev
+      - libqt5webkit5-dev
+      - qtdeclarative5-private-dev
+      - qtdeclarative5-dev-tools
+      - intltool
+      - libasound-dev
+      - libssl-dev
+    stage-packages:
+      - qml-module-qtwebkit
+    override-prime: |
+      craftctl default
+      mkdir -p ${CRAFT_PRIME}/bin
+      cp -a /snap/lomiri-ui-toolkit-core24/current/command-chain/lomiri-launch ${CRAFT_PRIME}/bin/lomiri-launch
+
+  misc:
+    after:
+      - main
+    plugin: dump
+    source: snap/local
+    prime:
+      - bin/pulseenv
+
+  gpu-2404:
+    after:
+      - misc
+    source: https://github.com/canonical/gpu-snap.git
+    plugin: dump
+    override-prime: |
+      craftctl default
+      ${CRAFT_PART_SRC}/bin/gpu-2404-cleanup mesa-2404
+    prime:
+      - bin/gpu-2404-wrapper
