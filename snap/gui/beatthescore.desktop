@@ -2,5 +2,5 @@
 Type=Application
 Name=Beat The Score
 Comment=A Music Instrument Learning Drill Program
-Icon=${SNAP}/snap/gui/beatthescore.png
+Icon=${SNAP}/meta/gui/beatthescore.png
 Exec=beatthescore
